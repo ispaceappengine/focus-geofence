@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:FeatureCollection xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:geofence_sbg="geofence_sbg" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="unknown" numberReturned="0" timeStamp="2015-11-25T16:21:11.472Z" xsi:schemaLocation="http://www.opengis.net/gml/3.2 http://ispacevm22.researchstudio.at:80/geoserver/schemas/gml/3.2.1/gml.xsd geofence_sbg http://ispacevm22.researchstudio.at:80/geoserver/geofence_sbg/wfs?service=WFS&amp;version=1.0.0&amp;request=DescribeFeatureType&amp;typeName=geofence_sbg%3Ageofence_sbg http://www.opengis.net/wfs/2.0 http://ispacevm22.researchstudio.at:80/geoserver/schemas/wfs/2.0/wfs.xsd">
+	<wfs:member>
+		<geofence_sbg:geofence_sbg gml:id="geofence_sbg.1">
+			<gml:description>mydesc1</gml:description>
+			<gml:name>hofergebauede</gml:name>
+			<geofence_sbg:objectid>1</geofence_sbg:objectid>
+			<geofence_sbg:id>1</geofence_sbg:id>
+			<geofence_sbg:shape>
+				<gml:Polygon srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+					<gml:exterior>
+						<gml:LinearRing>
+							<gml:posList>13.039264785 47.821889693 13.038046588999975 47.82404465299999 13.03875016699999 47.82463968000002 13.040181447000009 47.82219122700002 13.039264785 47.821889693</gml:posList>
+						</gml:LinearRing>
+					</gml:exterior>
+				</gml:Polygon>
+			</geofence_sbg:shape>
+		</geofence_sbg:geofence_sbg>
+	</wfs:member>
+	<wfs:member>
+		<geofence_sbg:geofence_sbg gml:id="geofence_sbg.3">
+			<gml:name>parkplatz</gml:name>
+			<geofence_sbg:objectid>3</geofence_sbg:objectid>
+			<geofence_sbg:id>3</geofence_sbg:id>
+			<geofence_sbg:shape>
+				<gml:Polygon srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+					<gml:exterior>
+						<gml:LinearRing>
+							<gml:posList>13.039201201000026 47.824346037 13.039533135 47.82464227999998 13.039750856000012 47.82429249900002 13.039201201000026 47.824346037</gml:posList>
+						</gml:LinearRing>
+					</gml:exterior>
+				</gml:Polygon>
+			</geofence_sbg:shape>
+		</geofence_sbg:geofence_sbg>
+	</wfs:member>
+	<wfs:member>
+		<geofence_sbg:geofence_sbg gml:id="geofence_sbg.2">
+			<gml:name>bahnuebergang</gml:name>
+			<geofence_sbg:objectid>2</geofence_sbg:objectid>
+			<geofence_sbg:id>2</geofence_sbg:id>
+			<geofence_sbg:shape>
+				<gml:Polygon srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+					<gml:exterior>
+						<gml:LinearRing>
+							<gml:posList>13.036148781321177 47.82378749043524 13.036770783951816 47.82404755187994 13.037296268932874 47.823262005454175 13.036148781321177 47.82378749043524</gml:posList>
+						</gml:LinearRing>
+					</gml:exterior>
+				</gml:Polygon>
+			</geofence_sbg:shape>
+		</geofence_sbg:geofence_sbg>
+	</wfs:member>
+</wfs:FeatureCollection>

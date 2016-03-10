@@ -1,0 +1,8 @@
+{
+	"xCoordTestFake": "13.036801240999978",
+	"yCoordTestFake": "47.82366281100002",
+	"urlSosService": "http://ispacevm30.researchstudio.at/sos42/service",
+	"urlWfsBoundingBox": "http://ispacevm22.researchstudio.at/geoserver/geofence_sbg/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geofence_sbg:geofence_sbg_bbox&maxFeatures=500&outputFormat=text/xml;%20subtype=gml/3.2",
+	"urlWfsPolygons": "http://ispacevm22.researchstudio.at/geoserver/geofence_sbg/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geofence_sbg:geofence_sbg&maxFeatures=500&outputFormat=text/xml;%20subtype=gml/3.2",
+	"elementSeparator": "="
+}

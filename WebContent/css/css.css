@@ -1,0 +1,223 @@
+input[type="text"]:disabled {
+    background: #dddddd;
+}
+
+input[readonly]
+{
+    background-color:lightgray;
+}
+.configFileClass{
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+} 
+
+a.noUnderLine {
+text-decoration: none;
+}
+
+.tgneu {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-color: #aaa;
+}
+
+.tgneu td {width ="500";
+	font-family: Arial, sans-serif;
+	font-size: 18px;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 0px;
+	overflow: visible;
+	word-break: normal;
+	border-color: #aaa;
+	color: #333;
+	background-color: #fff;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+}
+
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-color: #aaa;
+}
+
+.tg td {width ="500";
+	font-family: Arial, sans-serif;
+	font-size: 18px;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 0px;
+	overflow: visible;
+	word-break: normal;
+	border-color: #aaa;
+	color: #333;
+	background-color: #fff;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+}
+
+.tg th {width ="500";
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 0px;
+	overflow: visible;
+	word-break: normal;
+	border-color: #aaa;
+	color: #fff;
+	/*background-color: #008daf;*/
+	background-color: #009966;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+}
+
+.tg .tg-f2ue {
+	background-color: #FCFBE3;
+	font-size: 20px
+}
+
+.tg .tg-8zau {
+	font-size: 32px;
+	text-align: center
+}
+
+.tg .tg-i7wz {
+	font-size: 20px
+}
+
+.tg .tg-nfhw {
+	font-size: 32px
+}
+
+.tg .tg-z2zr {
+	background-color: #FCFBE3
+}
+
+
+
+
+a.tooltip {
+    outline: none;
+    text-decoration: none;
+    border-bottom: dotted 1px blue;
+    position: relative;
+    overflow: visible;
+}
+
+a.tooltip strong {
+    line-height: 30px;
+}
+
+a.tooltip > span {
+    width: 350px;
+    padding: 10px 20px;
+    overflow: visible;
+    margin-top: 0;
+    margin-left: -120px;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    position: absolute;
+    font-family: Arial;
+    font-size: 14px;
+    font-style: normal;
+    border-radius: 3px;
+    box-shadow: 2px 2px 2px #999;
+    -webkit-transition-property: opacity, margin-top, visibility, margin-left;
+    -webkit-transition-duration: 0.4s, 0.3s, 0.4s, 0.3s;
+    -webkit-transition-timing-function: ease-in-out, ease-in-out, ease-in-out, ease-in-out;
+    transition-property: opacity, margin-top, visibility, margin-left;
+    transition-duration: 0.2s, 0.3s, 0.4s, 0.3s;
+    /*das 0.2s als erstes, gibt an wie schnell der tooltip dann verschwindet! */
+    transition-timing-function: 
+        ease-in-out, ease-in-out, ease-in-out, ease-in-out;
+}
+
+/*a.tooltip > span:hover,*/
+a.tooltip:hover > span {
+    opacity: 1;
+    text-decoration: none;
+    visibility: visible;
+    overflow: visible;
+    margin-top: 50px;
+    display: inline;
+    margin-left: -90px;
+}
+
+a.tooltip span b {
+	font-weight:bold;
+    width: 15px;
+    height: 15px;
+    margin-left: 40px;
+    margin-top: -19px;
+    display: block;
+    position: absolute;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-box-shadow: inset -1px 1px 0 #fff;
+    -moz-box-shadow: inset 0 1px 0 #fff;
+    -o-box-shadow: inset 0 1px 0 #fff;
+    box-shadow: inset 0 1px 0 #fff;
+    display: none\0/;
+    *display: none;
+}    
+
+a.tooltip > span {
+	color: #000000; 
+	background: #FBF5E6;
+	background: -webkit-linear-gradient(top, #FBF5E6, #FFFFFF);
+	background: linear-gradient(top, #FBF5E6, #FFFFFF);	    
+	border: 1px solid #CFB57C;	     
+}    
+	  
+a.tooltip span b {
+	background: #FBF5E6;
+	border-top: 1px solid #CFB57C;
+	border-right: 1px solid #CFB57C;
+}
+
+
+
+
+a.tooltips {
+  position: relative;
+  display: inline;
+}
+a.tooltips span {
+	overflow: visible;
+  position: absolute;
+  width:140px;
+  color: #FFFFFF;
+  background: #000000;
+  height: 74px;
+  line-height: 74px;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 6px;
+  box-shadow: 3px 3px 1px #800000;
+}
+a.tooltips span:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-top: 8px solid #000000;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+a:hover.tooltips span {
+  visibility: visible;
+  overflow: visible;
+  opacity: 0.8;
+  bottom: 30px;
+  left: 50%;
+  margin-left: -76px;
+  z-index: 1;
+}

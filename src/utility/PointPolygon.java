@@ -31,26 +31,35 @@ public class PointPolygon {
 	}
 	
 	
-	/**Contains PointPolygon objects and each of them has a polygon (polygonPath2D). */
+	/**Contains PointPolygon objects and each of them has a polygon (polygonPath2D). Position 0: polygon of unloading, Position 1: polygon of within geofence */
 	public ArrayList<Path2D> list_ofPolygons = new ArrayList<Path2D>();
+	public ArrayList<Path2D> list_ofPolygonsWithin = new ArrayList<Path2D>();
+	/**See list_ofPolygons */
 	public ArrayList<Path2D> list_ofBoundingBox = new ArrayList<Path2D>();
 	public ArrayList<String> list_ofStrConsistingOf5CoordinatesForBoundingBox = new ArrayList<String>();
 	public ArrayList<String> list_ofStrCoordinatesForPolygon = new ArrayList<String>();
+	public ArrayList<String> list_BboxObjectidForUnloading = new ArrayList<String>();
+	
+	public ArrayList<Path2D> list_ofBoundingBoxWithin = new ArrayList<Path2D>();
+	public ArrayList<String> list_ofStrConsistingOf5CoordinatesForBoundingBoxWithin = new ArrayList<String>();
+	public ArrayList<String> list_ofStrCoordinatesForPolygonWithin = new ArrayList<String>();
+	public ArrayList<String> list_BboxObjectiWithin = new ArrayList<String>();
+	
 	public Path2D polygonPath2D = new Path2D.Double();
 	public Path2D boundingBoxPath2D = new Path2D.Double();
 	public Point2D point2D = new Point2D.Double();
-	public ArrayList<String> list_BboxObjectid = new ArrayList<String>();
+	
 	
 	/**
 	 * Creates a polygon that consists of many points or a bounding box.
 	 * @param strContainingXYCoordinates A String with many X and Y coordinates, separated by a space/blank.
-	 * @param polygonOrbBox If String.equals("bbox") => create a bounding box. Else create a polygon.
-	 * @return polygon A PointPolygon object.
+	 * @param polygonOrBbox If String.equals("bbox") => create a bounding box. Else create a polygon.
+	 * @return A Path2D.Double polygon object.
 	 */
-	public PointPolygon createPolygonBbox(String strContainingXYCoordinates, String polygonOrBbox){
+	public Path2D.Double createPolygonBbox(String strContainingXYCoordinates, String polygonOrBbox){
 		
 	    String []stray = strContainingXYCoordinates.split(" ");
-	    Path2D polygonBuilder = new Path2D.Double();
+	    Path2D.Double polygonBuilder = new Path2D.Double();
 	    
 	    // 4 elemente = 2 Punkte. 0=X,1=Y und dann 2,3; 2<4-1
 	    for (int j = 0; j < stray.length - 1; j = j + 2) { 
@@ -60,15 +69,15 @@ public class PointPolygon {
 			}
 			polygonBuilder.lineTo(Double.parseDouble(stray[j]),	Double.parseDouble(stray[j + 1]));
 	    }
-	    PointPolygon polygon = new PointPolygon();
-	    if(polygonOrBbox.equals("bbox")){
-	    	polygon.boundingBoxPath2D = polygonBuilder;
-	    	this.list_ofBoundingBox.add(polygonBuilder);
-	    }else{
-	    	polygon.polygonPath2D = polygonBuilder;
-	    	this.list_ofPolygons.add(polygonBuilder);
-	    }
-	    return polygon;	    
+//	    PointPolygon polygon = new PointPolygon();
+//	    if(polygonOrBbox.equals("bbox")){
+//	    	polygon.boundingBoxPath2D = polygonBuilder;
+//	    	this.list_ofBoundingBox.add(polygonBuilder);
+//	    }else{
+//	    	polygon.polygonPath2D = polygonBuilder;
+//	    	this.list_ofPolygons.add(polygonBuilder);
+//	    }
+	    return polygonBuilder;	    
 	}
 	
 	/**

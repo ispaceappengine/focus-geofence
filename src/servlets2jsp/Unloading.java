@@ -23,17 +23,15 @@ import utility.WebsocketClientEndpoint;
  * Used to handle the configuration of the web service. Static data, that is needed for other
  * parts of the web application is also controlled in this class.
  */
-@WebServlet({ "/Configuration", "/configuration" })
-public class Configuration extends HttpServlet {
+@WebServlet({ "/unloading" })
+public class Unloading extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static ArrayList<String> _list_registeredZridInSos = null;
-	public static ArrayList<String> _list_ZridFromTstp = null;
-	
+
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Configuration() {
+    public Unloading() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,7 +41,7 @@ public class Configuration extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		out.println("This is configuration doGet!");
+		out.println("This is unloading doGet!");
 		//System.out.println("This is Configuration.java:doGet");
 		
 //			LoadOnStartAppConfiguration.urlSosService = TextFiles.read1SimpleJsonValue("geofence_config.json", "urlSosService");
@@ -60,6 +58,8 @@ public class Configuration extends HttpServlet {
 	        request.setAttribute("urlWfsBoundingBox", LoadOnStartAppConfiguration.urlWfsBoundingBox);
 	        request.setAttribute("urlWfsPolygons",  LoadOnStartAppConfiguration.urlWfsPolygons);
 	        request.setAttribute("urlWebSocketURI", LoadOnStartAppConfiguration.urlWebSocketURI);
+	        request.setAttribute("value_from", LoadOnStartAppConfiguration.value_from);
+	        request.setAttribute("value_to", LoadOnStartAppConfiguration.value_to);
 	        
 	    //    try {
 	            // open websocket
@@ -88,7 +88,7 @@ public class Configuration extends HttpServlet {
 	        //    System.err.println("InterruptedException exception: " + ex.getMessage());
 	        //}
 	        
-	        RequestDispatcher rd = getServletContext().getRequestDispatcher("/configuration.jsp");
+	        RequestDispatcher rd = getServletContext().getRequestDispatcher("/unloading.jsp");
 	        rd.forward(request, response);			
 	}
 

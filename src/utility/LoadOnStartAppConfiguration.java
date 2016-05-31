@@ -1,6 +1,7 @@
 package utility;
 
 import java.net.URI;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ExecutionException;
@@ -8,9 +9,16 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import org.slf4j.LoggerFactory;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
+
+
+
+
+import ch.qos.logback.classic.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,33 +29,72 @@ import com.google.gson.JsonParser;
 
 /**
  * The class is called on Server/Application start. Mainly used to initialize specific variables and lists 
- * with data, that are needed in later process.
+ * with data, that are needed in later processes.
  * 
  * @author slukic
  */
 public class LoadOnStartAppConfiguration extends HttpServlet {
 	
+	Logger logger = (Logger) LoggerFactory.getLogger(getClass().getName()+".class");
 	/** Specifies the string e.g. "=" that will separate NAME, ORT, etc.	 */	 
-	public static String elementSeparator = "=";	
 	
-	public static String urlSosService = "";
-	public static String xCoordTestFake, yCoordTestFake, urlWfsBoundingBox, urlWfsPolygons;	
+	public static String elementSeparator = "=";	
+	public static ArrayList<Double []> list_coords = new ArrayList<Double[]>();
+	
+	
+	public static String xCoordTestFake, yCoordTestFake, urlWfsBoundingBox, urlWfsPolygons;
+	public static String urlWfsBoundingBox_withinGeofence;
+	public static String urlWfsPolygons_withinGeofence;	
 	public static String arbeitsbereichXmlTagBoundingBox, arbeitsbereichXmlTagPolygon ="";
 	public static boolean fakeTestPointInPolygon;
 	public static String configFile ="geofence_config.json";
 	public static  WebsocketClientEndpoint clientEndPoint = null;
-	//public static String webSocketURI ="ws://ispacevm20.researchstudio.at/geo-websocket/websocket/chat";
-	public static String webSocketURI ="ws://localhost:8080/geo-websocket/websocket/iridium";
+	public static WebsocketClientEndpoint clientEndpoint_withinGeofence;
+	//public static String urlWebSocketURI ="ws://ispacevm20.researchstudio.at/geo-websocket/websocket/chat";
+	public static String urlWebSocketURI ="";
+	
+	public static String urlSosService = "";
+	public static Boolean active_urlUnloadingWfsService = false;
+	public static Boolean active_urlWithinGeofenceWfsService = false;
+	public static String urlGeoserverWfsService = urlWfsPolygons;
+	public static String value_from;
+	public static String value_to;
 	
 	public void init() throws ServletException {
+		
+		//can be deleted
+		/* 
+		int n =2;
+		for(int i =0; i<4; i++){
+		Double [] arrDouble = new Double[n];
+		arrDouble[0] = 47.21 +i;
+		arrDouble[1] = 13.61 +i*2;
+		if(i%2==0){
+			arrDouble[0] = 37.21 +i;
+			arrDouble[1] = 10.61 +i*2;
+		}
+		}
+		//list_coords.add(arrDouble);
+		*/
+
+		list_coords.add(new Double[]{44.10, 12.10 });
+		list_coords.add(new Double[]{44.10, 14.10 });
+		list_coords.add(new Double[]{49.10, 14.10 });
+		list_coords.add(new Double[]{49.10, 12.10 });
+		
+		logger.debug(String.valueOf(list_coords.size()));
 
 		String classLoaderPath = TextFiles.setClassLoaderPath();
-		
+		/*
 		 try {
-			clientEndPoint=new WebsocketClientEndpoint(new URI(webSocketURI));
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			clientEndPoint=new WebsocketClientEndpoint(new URI(urlWebSocketURI));
+			logger.info("WebSocket unter: "+urlWebSocketURI+" verfügbar!");
+		} catch (Exception e) {
+			e.printStackTrace();	
+			logger.error("some error:",e);
+			logger.debug(e.getMessage());			
 		}
+		*/
 		// String jsonText =
 		// TextFiles.readTextFileWithServletsAsStream_UTF8("tstp2sos_config.json");
 		try {
@@ -62,11 +109,14 @@ public class LoadOnStartAppConfiguration extends HttpServlet {
 //		JsonObject jobj2 = g.fromJson(jsonText, JsonObject.class);
 //		Boolean executeInsertObservationServicesOnStartUp = jobj2.get("executeInsertObservationServicesOnStartUp").getAsBoolean();
 //		elementSeparator = jobj2.get("elementSeparator").getAsString();
-		System.out.println("\n");
-		System.out.println("############ Start ############ ");
-		System.out.println("This is LoadOnStartAppConfiguration: geofence");
-		System.out.println("ClassLoaderPath: " + classLoaderPath);
-		System.out.println("############ End of LoadOnStartAppConfiguration! ############ \n");
+		
+		Instant time = Instant.now();
+		logger.debug("time: "+time);
+		
+		logger.debug("############ Start ############ ");
+		logger.debug("This is LoadOnStartAppConfiguration geofence");
+		logger.debug("ClassLoaderPath: " + classLoaderPath);
+		logger.debug("############ End of LoadOnStartAppConfiguration! ############ \n");
 	}
 	
 	/**
@@ -78,8 +128,13 @@ public class LoadOnStartAppConfiguration extends HttpServlet {
 		LoadOnStartAppConfiguration.urlSosService = TextFiles.read1SimpleJsonValue(configFile, "urlSosService");
 		LoadOnStartAppConfiguration.urlWfsBoundingBox = TextFiles.read1SimpleJsonValue(configFile, "urlWfsBoundingBox");
 		LoadOnStartAppConfiguration.urlWfsPolygons = TextFiles.read1SimpleJsonValue(configFile, "urlWfsPolygons");
-		LoadOnStartAppConfiguration.arbeitsbereichXmlTagBoundingBox = new PointInPolygonComputation().getArbeitsbereichXmlTagFromWfs("bbox");
-        LoadOnStartAppConfiguration.arbeitsbereichXmlTagPolygon = new PointInPolygonComputation().getArbeitsbereichXmlTagFromWfs("whateva");
+		LoadOnStartAppConfiguration.urlWebSocketURI = TextFiles.read1SimpleJsonValue(configFile, "urlWebSocketURI");
+		//LoadOnStartAppConfiguration.arbeitsbereichXmlTagBoundingBox = new ParserXmlJson().getArbeitsbereichXmlTagFromWfs("bbox");
+        //LoadOnStartAppConfiguration.arbeitsbereichXmlTagPolygon = new ParserXmlJson().getArbeitsbereichXmlTagFromWfs("whateva");
+        LoadOnStartAppConfiguration.urlWfsBoundingBox_withinGeofence = TextFiles.read1SimpleJsonValue(configFile, "urlWfsBoundingBox_withinGeofence");
+        LoadOnStartAppConfiguration.urlWfsPolygons_withinGeofence = TextFiles.read1SimpleJsonValue(configFile, "urlWfsPolygons_withinGeofence");
+        LoadOnStartAppConfiguration.value_from = TextFiles.read1SimpleJsonValue(configFile, "value_from");
+        LoadOnStartAppConfiguration.value_to = TextFiles.read1SimpleJsonValue(configFile, "value_to");
 	}
 	
 	/**
@@ -88,7 +143,7 @@ public class LoadOnStartAppConfiguration extends HttpServlet {
 	 */
 	public static void reloadClientEndpointObject(){
 		try {
-			clientEndPoint=new WebsocketClientEndpoint(new URI(webSocketURI));
+			clientEndPoint=new WebsocketClientEndpoint(new URI(urlWebSocketURI));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

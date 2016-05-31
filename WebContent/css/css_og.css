@@ -75,8 +75,7 @@ text-decoration: none;
 }
 
 .tg .tg-f2ue {
-	background-color:#C8E4C6;  <!--#FCFBE3;-->
-
+	background-color: #FCFBE3;
 	font-size: 20px
 }
 
@@ -94,34 +93,13 @@ text-decoration: none;
 }
 
 .tg .tg-z2zr {
-	background-color: #C8E4C6;  //#FCFBE3
-}
-
-.btn-colour{
-	background-color: #C8E4C6;
-}
-.btn:hover
-{
-background-image:none;
-background-color:#009966;
-}
-.logoMM{
-	margin-top:10px;
-	height: 33px;
-	margin-right: 30px;
-}
-.logoRSA{
-	margin-top:10px;
-	height: 32px;
-}
-
-.center-logos{
-	text-align: center;
-    alignment-adjust: central;
+	background-color: #FCFBE3
 }
 
 
-a.tooltip_custom {
+
+
+a.tooltip {
     outline: none;
     text-decoration: none;
     border-bottom: dotted 1px blue;
@@ -129,11 +107,11 @@ a.tooltip_custom {
     overflow: visible;
 }
 
-a.tooltip_custom strong {
+a.tooltip strong {
     line-height: 30px;
 }
 
-a.tooltip_custom > span {
+a.tooltip > span {
     width: 350px;
     padding: 10px 20px;
     overflow: visible;
@@ -159,7 +137,7 @@ a.tooltip_custom > span {
 }
 
 /*a.tooltip > span:hover,*/
-a.tooltip_custom:hover > span {
+a.tooltip:hover > span {
     opacity: 1;
     text-decoration: none;
     visibility: visible;
@@ -169,7 +147,7 @@ a.tooltip_custom:hover > span {
     margin-left: -90px;
 }
 
-a.tooltip_custom span b {
+a.tooltip span b {
 	font-weight:bold;
     width: 15px;
     height: 15px;
@@ -189,19 +167,21 @@ a.tooltip_custom span b {
     *display: none;
 }    
 
-a.tooltip_custom > span {
+a.tooltip > span {
 	color: #000000; 
-	background:  #C8E4C6;//#FBF5E6;
-	background: -webkit-linear-gradient(top,  #C8E4C6, #FFFFFF);//#FBF5E6;
-	background: linear-gradient(top,  #C8E4C6, #FFFFFF); //#FBF5E6;	    
+	background: #FBF5E6;
+	background: -webkit-linear-gradient(top, #FBF5E6, #FFFFFF);
+	background: linear-gradient(top, #FBF5E6, #FFFFFF);	    
 	border: 1px solid #CFB57C;	     
 }    
 	  
-a.tooltip_custom span b {
+a.tooltip span b {
 	background: #FBF5E6;
 	border-top: 1px solid #CFB57C;
 	border-right: 1px solid #CFB57C;
 }
+
+
 
 
 a.tooltips {

@@ -24,17 +24,26 @@
   </tr>
      <tr>
     <td class="tg-031e" colspan="2"><p>
-    The purpose of this web service is to determine, if a forest truck is unloading tree logs. Therefore it is checked, if the "loading event" (based on the SensorAppIII vibration indicator) is taking place in predefined geographical area (e.g log area saw mill).
-      <br><br>
+    The purpose of the primary web service is to determine, if a forest truck is unloading tree logs. Therefore it is checked, if the "loading event" (based on the SensorAppIII vibration indicator) is taking place in a predefined geographical area (e.g log area saw mill).
+    The purpose of the secondary web service is to determine, if a forest truck is located within a predefined geofence.  <br><br>
      Send your data with a POST method to: <a href=${pageContext.request.requestURL}service>${pageContext.request.requestURL}service</a>.
      <!-- You can use this web service (focusgeofence) to check if a point is in a polygon. -->
     <br><br>
     Please use the configuration options to provide additional information. You will be guided through the process on each of the subsites in more detail.</p></td>
   </tr> 
-  <tr>
-    <td class="tg-f2ue"><a href="${pageContext.request.requestURL}configuration">1. Configuration focusgeofence</a></td>
-    <td class="tg-z2zr">Provide the initial settings of the service such as the SOS server URL and the WFS URL.</td>
+  
+    <tr>
+    <td class="tg-f2ue"><a href="${pageContext.request.requestURL}unloading">1. Service configuration for log 'unloading' areas WFS link</a></td>
+    <td class="tg-z2zr"> <p>
+    A service specifically associated with <i>'unlaoding'</i>. Provide the initial settings for the Geoserver WFS services.</p></td>
   </tr>
+  
+      <tr>
+    <td class="tg-i7wz"><a href="${pageContext.request.requestURL}withingeofence">2. Service configuration for 'within drivetime[15min]' geofence WFS link</a></td>
+    <td class="tg-031e"> <p>
+    A service specifically associated with <i>'within geofence'</i> and WebSockets. Provide the initial settings for the Geoserver WFS services and the WebSocket.</p></td>
+  </tr>  
+
   <!-- 
     <tr>
     <td class="tg-i7wz"><a href="/tstp2sos/zeitreihen">2. Service definition for GetAllTimeSeries</a></td>
@@ -66,8 +75,15 @@
     <td align="right"> <!-- <input formaction="/tstp2sos/send-is" formmethod="POST" type="submit" value="Send InsertSensor"/> --></td>
                     
   </tr>
+  
 </table>
 
+<div class="container">
+	<div id ="logos" class="center-logos">
+			<a  href="http://www.mm-holz.com/" target="_blank"><img class="logoMM" src="img/mm.png" /></a>
+			<a href="http://ispace.researchstudio.at/" target="_blank"><img class="logoRSA" src="img/rsa2.png" /></a>
+	</div>
+</div>
 
   
 </body>

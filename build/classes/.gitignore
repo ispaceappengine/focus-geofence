@@ -1,7 +1,6 @@
 /handler/
 /json/
+/logback.xml
 /resources/
 /servlets2jsp/
 /utility/
-/websocket/
-/binary/

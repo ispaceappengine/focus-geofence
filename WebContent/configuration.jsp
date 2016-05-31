@@ -64,7 +64,48 @@
 </a></td>
   </tr>
     <tr>
-    <td class="tg-i7wz">WFS URL to get only BoundingBox</td>
+    <td class="tg-i7wz">Unloading WFS: URL to get only BoundingBox of Polygons</td>
+    <td class="tg-031e"><input id="urlWfsBoundingBox" type="text" name="urlWfsBoundingBox" size="65" placeholder="provide a url to a WFS to get only bounding box" 
+    value="${urlWfsBoundingBox}"  />    
+        
+<a class="tooltip">
+	<img title="" src="img/tooltip_icon.jpg" alt="tooltip" >
+	<span> 
+		<b></b>
+		Provide the Web Feature Service URL where from to get only the coordinates of the bounding box of the existing polygons. 
+<br>		
+	</span> 
+</a> 
+ 
+ <input type="button" value="Click Me" style="float: right;">
+
+    </td>
+  </tr>
+  <!-- executeInsertObservationServicesOnStartUp-->
+  <!-- <tr>
+    <td class="tg-i7wz">Abstract-Description</td>
+    <td class="tg-031e">
+    <textarea id="_abstract" name="_abstract" cols="49" rows="3" placeholder="Textual description of the service">${cdc.abstract_text}</textarea> 
+  </tr>-->
+  <tr>
+    <td class="tg-f2ue">Unloading WFS: URL to get Polygons</td>
+    <td class="tg-z2zr">
+    <input id="urlWfsPolygons" name="urlWfsPolygons" size="65" placeholder="provide a url to a WFS to get polygons" 
+    value= "${urlWfsPolygons}"/> 
+           
+<a  class="tooltip">
+	<img title="" src="img/tooltip_icon.jpg" alt="tooltip" >
+	<span> 
+		<b></b>
+		Provide the Web Feature Service URL where from to get the existing polygons.
+		<br>		
+	</span> 
+</a>
+    </td>
+  </tr>  
+  
+  <tr>
+    <td class="tg-i7wz">Within geofence WFS: URL to get only BoundingBox of Polygons</td>
     <td class="tg-031e"><input id="urlWfsBoundingBox" type="text" name="urlWfsBoundingBox" size="65" placeholder="provide a url to a WFS to get only bounding box" 
     value="${urlWfsBoundingBox}"  />    
         
@@ -85,7 +126,7 @@
     <textarea id="_abstract" name="_abstract" cols="49" rows="3" placeholder="Textual description of the service">${cdc.abstract_text}</textarea> 
   </tr>-->
   <tr>
-    <td class="tg-f2ue">WFS URL to get polygons</td>
+    <td class="tg-f2ue">Within geofence WFS: URL to get Polygons</td>
     <td class="tg-z2zr">
     <input id="urlWfsPolygons" name="urlWfsPolygons" size="65" placeholder="provide a url to a WFS to get polygons" 
     value= "${urlWfsPolygons}"/> 
@@ -100,6 +141,24 @@
 </a>
     </td>
   </tr>  
+  
+  <tr>
+    <td class="tg-i7wz">WebSocket URL</td>
+    <td class="tg-031e"><input id="urlWebSocketURI" type="text" name="urlWebSocketURI" size="65" placeholder="provide a url to a WebSocket" 
+    value="${urlWebSocketURI}"  />    
+        
+		<a class="tooltip">
+			<img title="" src="img/tooltip_icon.jpg" alt="tooltip" >
+			<span> 
+				<b></b>
+				Provide the WebSocket URL. The data will be sent to this WS URL. 
+		<br>		
+			</span> 
+		</a>    
+    </td>
+  </tr>
+  
+    
   <!-- 
     <tr>
     <td class="tg-f2ue">Service Definition for InsertSensor</td>
@@ -120,8 +179,7 @@
    -->  
   <tr>
     <td></td>
-    <td align="right">  <input formaction="<%=request.getContextPath()%>/ConfigurationHandler" formmethod="POST" type="submit" value="Save Configuration"/> </td>
-                    
+    <td align="right">  <input formaction="<%=request.getContextPath()%>/ConfigurationHandler" formmethod="POST" type="submit" value="Save Configuration"/> </td>                    
   </tr>  
 </table>
 </form>

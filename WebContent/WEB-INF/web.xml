@@ -14,6 +14,16 @@
     <servlet-class>utility.LoadOnStartAppConfiguration</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
+
+  <servlet>
+    <servlet-name>websocket</servlet-name>
+    <jsp-file>/websocket.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>websocket</servlet-name>
+    <url-pattern>/websocket</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>wsRoom1</servlet-name>
     <servlet-class>websocket.chat.ChatWebSocketServlet</servlet-class>

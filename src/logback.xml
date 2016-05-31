@@ -1,0 +1,77 @@
+<configuration>
+<timestamp key="byDay" datePattern="yyyy-MM-dd'T'HH-mmss"/>
+<timestamp key="byDay2" datePattern="yyyy-MM-dd"/>
+
+
+  <appender name="FILE_INFO_machnix" class="ch.qos.logback.core.FileAppender">
+    <!-- <file>..\myApp.log</file>  würde außerhalb des projektordners im workspace erstellen-->
+<file>${catalina.base}/logs/a_geofence_machnix.log</file>
+  	
+  	 <filter class="ch.qos.logback.classic.filter.LevelFilter">      
+         <level>INFO</level>         
+         <onMatch>ACCEPT</onMatch>
+         <!-- <onMismatch>DENY</onMismatch>-->
+    </filter>
+    
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">      
+         <level>WARN</level>         
+         <onMatch>ACCEPT</onMatch>
+         <!-- <onMismatch>DENY</onMismatch>-->
+    </filter> 
+    
+	<filter class="ch.qos.logback.classic.filter.LevelFilter">      
+         <level>DEBUG</level>         
+         <onMatch>DENY</onMatch>
+         <!-- <onMismatch>DENY</onMismatch>-->
+    </filter> 
+   
+    <encoder>
+      <pattern>%date %level [%thread] %logger{36} [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="FILE_INFO" class="ch.qos.logback.core.FileAppender">
+    <!-- <file>..\myApp.log</file>  würde außerhalb des projektordners im workspace erstellen-->
+    <file>${catalina.base}/logs/a_geofence_logger_info_${byDay2}.log</file>
+  	<filter class="ch.qos.logback.classic.filter.LevelFilter">      
+         <level>INFO</level>         
+         <onMatch>ACCEPT</onMatch>
+         <onMismatch>DENY</onMismatch>
+    </filter>
+    <encoder>
+      <pattern>%date %level [%thread] %logger{10} [%file:%line]#%M: %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="FILE_DEBUG" class="ch.qos.logback.core.FileAppender">
+    <!-- <file>..\myApp.log</file>  würde außerhalb des projektordners im workspace erstellen-->
+    <!-- <file>logs/weblogger_logger10_debug_${byDay}.log</file> -->
+    <file>${catalina.base}/logs/a_geofence_logger_debug_${byDay}.log</file>
+    <encoder>
+      <pattern>%date %level [%thread] %logger{36} [%file:%line]#%M: %msg%n</pattern>
+    </encoder>
+  </appender>  
+  
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}#%M - %msg%n</pattern>
+    </encoder>
+	<!--     <filter class="ch.qos.logback.classic.filter.LevelFilter">      
+         <level>INFO</level>         
+         <onMatch>ACCEPT</onMatch>
+         <onMismatch>DENY</onMismatch>
+    </filter>-->
+  </appender>	
+
+  <root level="DEBUG">
+ 	<appender-ref ref="STDOUT" />  
+ 	<appender-ref ref="FILE_DEBUG" />  
+ 	<!-- 
+    <appender-ref ref="FILE_INFO" />
+  	<appender-ref ref="FILE_INFO_machnix" />
+   	-->
+  </root>
+ 
+</configuration>

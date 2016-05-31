@@ -1,6 +1,8 @@
 package utility;
 
+import java.io.IOException;
 import java.net.URI;
+
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
 import javax.websocket.ContainerProvider;
@@ -10,24 +12,53 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
+
 /**
  * ChatServer Client
  *
- * @author Jiji_Sasidharan
  */
 @ClientEndpoint
 public class WebsocketClientEndpoint {
 
-    Session userSession = null;
+	Logger logger = (Logger)LoggerFactory.getLogger(getClass().getName()+".class");
+    public Session userSession = null;
     private MessageHandler messageHandler;
 
+    public WebsocketClientEndpoint() {	}
+    
     public WebsocketClientEndpoint(URI endpointURI) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            container.connectToServer(this, endpointURI);
+            container.connectToServer(this, endpointURI);            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    
+	public void _createConnection(){
+		 try {
+			LoadOnStartAppConfiguration.clientEndPoint=new WebsocketClientEndpoint(new URI(LoadOnStartAppConfiguration.urlWebSocketURI));
+			logger.info("WebSocket unter: "+LoadOnStartAppConfiguration.urlWebSocketURI+" verfügbar!");
+		} catch (Exception e) {
+			e.printStackTrace();	
+			logger.error("some error:",e);
+			logger.debug(e.getMessage());			
+		}
+    }
+    /**
+     * Closes the session and connection to the WebSocket chat.
+     */
+    public void _closeSession(){
+    	try {    		
+			this.userSession.close();			
+			logger.debug("closing session!");
+		} catch (IOException e) {	
+			e.printStackTrace();
+			logger.error("some error",e);
+		}
     }
 
     /**
@@ -37,8 +68,9 @@ public class WebsocketClientEndpoint {
      */
     @OnOpen
     public void onOpen(Session userSession) {
-        System.out.println("opening websocket"+"auf welche Adresse?");
+    	logger.debug("opening websocket");        
         this.userSession = userSession;
+        
     }
 
     /**
@@ -86,7 +118,6 @@ public class WebsocketClientEndpoint {
     /**
      * Message handler.
      *
-     * @author Jiji_Sasidharan
      */
     public static interface MessageHandler {
 

@@ -1,5 +1,10 @@
 package json;
 
+/**
+ * Contains members that are needed to create InsertSensor and InsertObservation.
+ * @author slukic
+ *
+ */
 public class Observations {
 	
 	public String ObservationID ="";

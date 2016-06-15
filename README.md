@@ -1,6 +1,6 @@
 # focus-log-loading_geofence
 
-The purpose of this web service is to determine, if a forest truck is unloading tree logs. Therefore it is checked, if the "loading event" (based on the SensorAppIII vibration indicator) is taking place in predefined geographical area (e.g log area saw mill). 
+The purpose of the primary web service is to determine, if a forest truck is unloading tree logs. Therefore it is checked, if the "loading event" (based on the SensorAppIII vibration indicator) is taking place in a predefined geographical area (e.g log area saw mill). The purpose of the secondary web service is to determine, if a forest truck is located within a predefined geofence. 
 
 ## How to setup the  web service
 

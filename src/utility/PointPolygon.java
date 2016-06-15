@@ -51,7 +51,7 @@ public class PointPolygon {
 	
 	
 	/**
-	 * Creates a polygon that consists of many points or a bounding box.
+	 * Creates a polygon or a bounding box that consists of many points .
 	 * @param strContainingXYCoordinates A String with many X and Y coordinates, separated by a space/blank.
 	 * @param polygonOrBbox If String.equals("bbox") => create a bounding box. Else create a polygon.
 	 * @return A Path2D.Double polygon object.
@@ -59,24 +59,17 @@ public class PointPolygon {
 	public Path2D.Double createPolygonBbox(String strContainingXYCoordinates, String polygonOrBbox){
 		
 	    String []stray = strContainingXYCoordinates.split(" ");
-	    Path2D.Double polygonBuilder = new Path2D.Double();
+	    Path2D.Double polygonBuilder = new Path2D.Double();	    
+	    //... some polygon and boundingBox magic
 	    
-	    // 4 elemente = 2 Punkte. 0=X,1=Y und dann 2,3; 2<4-1
+	    // 4 elements = 2 Points. 0=X, 1=Y; same with 2,3; 2<4-1
 	    for (int j = 0; j < stray.length - 1; j = j + 2) { 
 	    	//start the polygon with 0=x,1=y Position
 			if (j == 0) {
 				polygonBuilder.moveTo(Double.parseDouble(stray[j]),	Double.parseDouble(stray[j+1]));
 			}
-			polygonBuilder.lineTo(Double.parseDouble(stray[j]),	Double.parseDouble(stray[j + 1]));
-	    }
-//	    PointPolygon polygon = new PointPolygon();
-//	    if(polygonOrBbox.equals("bbox")){
-//	    	polygon.boundingBoxPath2D = polygonBuilder;
-//	    	this.list_ofBoundingBox.add(polygonBuilder);
-//	    }else{
-//	    	polygon.polygonPath2D = polygonBuilder;
-//	    	this.list_ofPolygons.add(polygonBuilder);
-//	    }
+			polygonBuilder.lineTo(Double.parseDouble(stray[j]),	Double.parseDouble(stray[j+1]));
+	    }	    
 	    return polygonBuilder;	    
 	}
 	

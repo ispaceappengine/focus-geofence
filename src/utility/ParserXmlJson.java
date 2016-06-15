@@ -31,28 +31,25 @@ public class ParserXmlJson {
 
 	Logger logger = (Logger) LoggerFactory.getLogger(getClass().getName()+".class");
 	/**
-	 * Checks what kind of msg the insertData is (e.g. InsertObservation, InsertSensor, Json. If xml.contains("swes:InsertSensor service")  it is an InsertSensor operation and
-	 * the response will be "InsertSensor". If xml.contains("sos:InsertObservation service")  it is an InsertObservation operation  and
-	 * the response will be "InsertObservation".
-	 * @param insertData String that will be checked für its type. e.g. IO, IS or json.
-	 * @return insertDataType The information if the string is an IO, IS or a json.
+	 * Checks what kind of msg the insertData is (e.g. InsertObservation, InsertSensor, Json)
+	 * @param insertData String that will be checked for its type. e.g. IO, IS or json.
+	 * @return The information if the string is an IO, IS or a json.
 	 */
 	public String checkReceivedData(String insertData){
-		String insertDataType = "";		
+		String insertDataType = "undefined";		
 		
 		if(insertData.startsWith("{"))
 		{
 			insertDataType ="json";
 		}
-		else if(insertData.contains("swes:InsertSensor service"))
+		else if(insertData.contains("<swes:InsertSensor"))
 		{
 			insertDataType = "InsertSensor";			
 		}
-		else if(insertData.contains("sos:InsertObservation service"))
+		else if(insertData.contains("<sos:InsertObservation"))
 		{
 			insertDataType ="InsertObservation";						
-		}
-		System.out.println("ParserXmlJson.checkIfInsertSensorOrInsertObservation");
+		}		
 		return insertDataType;
 	}
 
@@ -111,21 +108,24 @@ public class ParserXmlJson {
 				System.out.println("offering: "+node_offering.getTextContent());
 				
 				String path_procedures = "//om:OM_Observation[@name='GetObservation']/ows:Parameter[@name='procedure']/ows:AllowedValues/ows:Value"; */
+	        	//book[title/@lang = 'it'] [@uom='abc']
+				//myNodeList.item(0).setNodeValue("Hi mom!");
+	        	
+	        	
+	        	//find Loading value
 				String path_loading = "//om:OM_Observation[om:observedProperty[@xlink:href='http://ispace.researchstudio.at/ont/swe/property/Loading']]/om:result";
 				NodeList nodes = (NodeList)xPath.compile(path_loading).evaluate(doc, XPathConstants.NODESET);
-				//book[title/@lang = 'it'] [@uom='abc']
-				//myNodeList.item(0).setNodeValue("Hi mom!");
+			
 				String messwert = "";
 				for(int n = 0; n<nodes.getLength(); n++){
 					messwert = nodes.item(n).getTextContent();
-					System.out.println("ParserXmlJson.parseInsertObservation:parser Loading OG: "+messwert);
-					
+					//replace original value with new value
 					if(messwert.equals(LoadOnStartAppConfiguration.value_from)){
 						nodes.item(n).setTextContent(LoadOnStartAppConfiguration.value_to);;
-					}
-					
-					System.out.println("ParserXmlJson.parseInsertObservation:parser Loading EDITED:"+nodes.item(n).getTextContent());
-				}			
+					}				
+				}		
+				
+				
 			//	System.out.println(TextFiles.xmlDocument2StringWithPrettyPrint(doc, 2));
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -199,33 +199,36 @@ public class ParserXmlJson {
 				//String path_loading = "//om:OM_Observation[om:observedProperty[@xlink:href='http://ispace.researchstudio.at/ont/swe/property/Loading']]/om:result";
 	        	
 	        	//The path to the time is only for the first observation block valid; other blocks have another path
-	        	String path_time = "//gml:timePosition";
-				NodeList nodes_path_time = (NodeList)xPath.compile(path_time).evaluate(doc, XPathConstants.NODESET);
-				
-				String path_SamplingFOIName = "//sams:SF_SpatialSamplingFeature/gml:name";
-				NodeList nodes_path_SamplingFOIName = (NodeList)xPath.compile(path_SamplingFOIName).evaluate(doc, XPathConstants.NODESET);
+	        	//book[title/@lang = 'it'] [@uom='abc']
+				//myNodeList.item(0).setNodeValue("Hi mom!");
+	        	
+	        	
 				
 				String path_SamplingFOIIdentifier = "//sams:SF_SpatialSamplingFeature/gml:identifier";
 				NodeList nodes_path_SamplingFOIIdentifier = (NodeList)xPath.compile(path_SamplingFOIIdentifier).evaluate(doc, XPathConstants.NODESET);
 				
 				String path_y_lat_x_long = "//gml:pos";
-				NodeList nodes_path_y_lat_x_long = (NodeList)xPath.compile(path_y_lat_x_long).evaluate(doc, XPathConstants.NODESET);
+				NodeList nodes_path_y_lat_x_long = (NodeList)xPath.compile(path_y_lat_x_long).evaluate(doc, XPathConstants.NODESET);						
+	        	
 				
-				
-	        	String path_procedure = "//om:OM_Observation/om:procedure/@xlink:href";
-				NodeList nodes_procedure = (NodeList)xPath.compile(path_procedure).evaluate(doc, XPathConstants.NODESET);
-				//book[title/@lang = 'it'] [@uom='abc']
-				//myNodeList.item(0).setNodeValue("Hi mom!");
 				String messwert = "";	
 				
 				//for(int n = 0; n<nodes_procedure.getLength(); n++){
 				//we need the data from only the first observation block
 				for(int n = 0; n<1; n++){
+					
+					
+					String path_time = "//gml:timePosition";
+					NodeList nodes_path_time = (NodeList)xPath.compile(path_time).evaluate(doc, XPathConstants.NODESET);				
+					String path_SamplingFOIName = "//sams:SF_SpatialSamplingFeature/gml:name";
+					NodeList nodes_path_SamplingFOIName = (NodeList)xPath.compile(path_SamplingFOIName).evaluate(doc, XPathConstants.NODESET);
+					String path_procedure = "//om:OM_Observation/om:procedure/@xlink:href";
+					NodeList nodes_procedure = (NodeList)xPath.compile(path_procedure).evaluate(doc, XPathConstants.NODESET);
+					
 					try{
 						GeoJson gjson = new GeoJson();
 						geoJson.list_geoJson.add(gjson);
-										
-						//The path to the time is only for the first observation block valid; other blocks have another path
+						
 						gjson.observationPhenomenonTime = nodes_path_time.item(0).getTextContent();						
 						gjson.samplingFOIName = nodes_path_SamplingFOIName.item(n).getTextContent();						
 						gjson.samplingFOIIdentifier = nodes_path_SamplingFOIIdentifier.item(n).getTextContent();
@@ -238,11 +241,10 @@ public class ParserXmlJson {
 						
 						if(stray.length==3){
 							gjson.z_alt = Double.parseDouble(coords.split(" ")[2]); 
-						}
-						
-						System.out.println("ParserXmlJson.extractDataForGeoJsonFromIo:parser procedure: "+geoJson.procedure);						
+						}					
 						
 					}catch(Exception ex){
+						
 						logger.error("some error", ex);						
 					}						
 				}		
@@ -320,33 +322,31 @@ public class ParserXmlJson {
 				//String pathToLoading = "//om:OM_Observation[om:observedProperty[@xlink:href='http://ispace.researchstudio.at/ont/swe/property/Loading']]/om:result";
 				
 				//jetzt werden hier aber alle X Y Koordinaten,die sich in InsertObservation.xml wiederholen, ausgelesen werden
-				String pathToCoordinates ="//gml:Point/gml:pos";
+				
 				//String pathToCoordinates ="//gml:LinearRing/gml:posList";
-				NodeList nodes_position = (NodeList)xPath.compile(pathToCoordinates).evaluate(doc, XPathConstants.NODESET);
+	        	
 				//book[title/@lang = 'it'] [@uom='abc']
-				//myNodeList.item(0).setNodeValue("Hi mom!");
-				String xy= "";
+				//myNodeList.item(0).setNodeValue("Hi test!");
+				
+	        	String pathToCoordinates ="//gml:Point/gml:pos";
+				NodeList nodes_position = (NodeList)xPath.compile(pathToCoordinates).evaluate(doc, XPathConstants.NODESET);
+	        	
 				ArrayList<String> list_xy = new ArrayList<String>();
 				
-				for(int n = 0; n<nodes_position.getLength(); n++){
-					//System.out.println("ParserXmlJson.extractPointFromIO: "+nodes_position.item(n).getTextContent());		
+				for(int n = 0; n<nodes_position.getLength(); n++){		
 					list_xy.add(nodes_position.item(n).getTextContent());
-					//node_procedures.item(n).setTextContent("4444");
-					//System.out.println("ParserXmlJson.parseInsertObservation:parser EDITED:"+node_procedures.item(n).getTextContent());
 				}			
-			//	System.out.println(TextFiles.xmlDocument2StringWithPrettyPrint(doc, 2));
-				try{
-				
+
+				try{				
 					point.y_latitude = Double.parseDouble(list_xy.get(0).split(" ")[0]);
-					point.x_longitude = Double.parseDouble(list_xy.get(0).split(" ")[1]);
-					
-					//point.point2D.setLocation(point.x_longitude, point.y_latitude);
+					point.x_longitude = Double.parseDouble(list_xy.get(0).split(" ")[1]);										
 					point.point2D.setLocation(point.y_latitude, point.x_longitude);
 				
-				}catch(Exception e){
-					System.out.println("Error: maybe no coordinates!");
+				}catch(Exception e){					
 					e.printStackTrace();					
 				}
+				
+				
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}			
@@ -411,14 +411,14 @@ public class ParserXmlJson {
 				String path_procedures = "//om:OM_Observation[@name='GetObservation']/ows:Parameter[@name='procedure']/ows:AllowedValues/ows:Value"; */
 //				String pathToLoading = "//om:OM_Observation[om:observedProperty[@xlink:href='http://ispace.researchstudio.at/ont/swe/property/Loading']]/om:result";
 				
-				//jetzt werden hier aber alle X Y Koordinaten,die sich in InsertObservation.xml wiederholen, ausgelesen werden
+
 	        	String pathToObjectid = "//"+nameSpaceUri +":objectid";
 	        	NodeList nodes_Objectid = (NodeList)xPath.compile(pathToObjectid).evaluate(doc, XPathConstants.NODESET);
 	        	
 				String pathToCoordinates ="//gml:LinearRing/gml:posList";
 				NodeList nodes_position = (NodeList)xPath.compile(pathToCoordinates).evaluate(doc, XPathConstants.NODESET);
 				//book[title/@lang = 'it'] [@uom='abc']
-				//myNodeList.item(0).setNodeValue("Hi mom!");
+				//myNodeList.item(0).setNodeValue("Hi test!");
 				String xy= "";
 				
 			//	logger.debug("vor for loop ParserXmlJson.extractPointFromIO:"+ nodes_position.getLength());	
@@ -470,10 +470,10 @@ public class ParserXmlJson {
 			String typenamePlusRest = stray[1]; //e.g.=geofence_sbg:geofence_sbg_151215_bbox
 			String [] stray2 = typenamePlusRest.substring(1).split(":");
 			arbeitsbereichXmlTag = stray2[0];
-			//System.out.println("PointInPolygonComputation.getArbeitsbereichXmlTagFromWfs :"+arbeitsbereichXmlTag);
+
 		}catch(Exception ex){
 			ex.printStackTrace();
-			//System.out.println("Error while parsing the URL for arbeitsbereichXmlTag");
+
 		}
 		return arbeitsbereichXmlTag; 
 	}

@@ -40,14 +40,14 @@ public class WebsocketClientEndpoint {
     
 	public void _createConnection(){
 		 try {
-			LoadOnStartAppConfiguration.clientEndPoint=new WebsocketClientEndpoint(new URI(LoadOnStartAppConfiguration.urlWebSocketURI));
-			logger.info("WebSocket unter: "+LoadOnStartAppConfiguration.urlWebSocketURI+" verfügbar!");
+			LoadOnStartAppConfiguration.clientEndPoint = new WebsocketClientEndpoint(new URI(LoadOnStartAppConfiguration.urlWebSocketURI));
+			logger.info("WebSocket: "+LoadOnStartAppConfiguration.urlWebSocketURI+" available!");
 		} catch (Exception e) {
-			e.printStackTrace();	
-			logger.error("some error:",e);
+			e.printStackTrace();			
 			logger.debug(e.getMessage());			
 		}
     }
+	
     /**
      * Closes the session and connection to the WebSocket chat.
      */
@@ -81,7 +81,7 @@ public class WebsocketClientEndpoint {
      */
     @OnClose
     public void onClose(Session userSession, CloseReason reason) {
-        System.out.println("closing websocket");
+    	logger.debug("closing websocket");
         this.userSession = null;
     }
 

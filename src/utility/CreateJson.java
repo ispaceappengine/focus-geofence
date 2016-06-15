@@ -47,14 +47,16 @@ public class CreateJson {
 		if(pointIsInPolygon){
 			geo.insidePolygon = 1;
 		}
-		jobjProperties.addProperty("insidePolygon", geo.insidePolygon);
-				
 		
+		jobjProperties.addProperty("insidePolygon", geo.insidePolygon);				
 		jobj.add("properties", jobjProperties);
-		
-		JsonObject jobjGeometry = new JsonObject();
+				
 		JsonObject jobjGeometryContent = new JsonObject();
 		jobjGeometryContent.addProperty("type", "Point");
+		
+		
+		
+		JsonObject jobjGeometry = new JsonObject();
 		//jobjGeometry.add("geometry",jobjGeometryContent);
 		JsonObject  jobjCoordinates = new JsonObject();
 		

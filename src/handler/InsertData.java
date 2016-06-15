@@ -90,8 +90,8 @@ public class InsertData extends HttpServlet {
 		PointPolygon point = new PointPolygon();
 		PointPolygon polygonBbox = new PointPolygon();
 		PointInPolygonComputation pipComputation = new PointInPolygonComputation();
-		polygonBbox = pipComputation.getPolygonBboxFromWFSForUnloading("bbox", polygonBbox, LoadOnStartAppConfiguration.urlWfsBoundingBox);
-		polygonBbox = pipComputation.getPolygonBboxFromWFSForUnloading("polygon", polygonBbox, LoadOnStartAppConfiguration.urlWfsPolygons);
+		pipComputation.getPolygonBboxFromWFSForUnloading("bbox", polygonBbox, LoadOnStartAppConfiguration.urlWfsBoundingBox);
+		pipComputation.getPolygonBboxFromWFSForUnloading("polygon", polygonBbox, LoadOnStartAppConfiguration.urlWfsPolygons);
 		
 		for(int j=0;j<polygonBbox.list_ofBoundingBox.size();j++){
 			System.out.println("bbox: "+ polygonBbox.list_ofStrConsistingOf5CoordinatesForBoundingBox.get(j));
@@ -112,38 +112,10 @@ public class InsertData extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//transform received msg to string
-		//checkIfInsertSensorOrInsertObservation
-		//sendPOST2Webservice
-		Networking net = new Networking();
-		PointPolygon polygonBbox = new PointPolygon();
-		PointInPolygonComputation pipComputation = new PointInPolygonComputation();
-		System.out.println("\n\n\n\n----InsertData.doPost");
 		
-		
-		Service service = Service.getInstance();
-		
-		//unloading
-		polygonBbox = pipComputation.getPolygonBboxFromWFSForUnloading("bbox", polygonBbox, LoadOnStartAppConfiguration.urlWfsBoundingBox);
-		polygonBbox = pipComputation.getPolygonBboxFromWFSForUnloading("polygon", polygonBbox, LoadOnStartAppConfiguration.urlWfsPolygons);
-		
-		
-		//within geofence
-		polygonBbox = pipComputation.getPolygonBboxFromWFSForWithin("bbox", polygonBbox, LoadOnStartAppConfiguration.urlWfsBoundingBox_withinGeofence);
-		polygonBbox = pipComputation.getPolygonBboxFromWFSForWithin("polygon", polygonBbox, LoadOnStartAppConfiguration.urlWfsPolygons_withinGeofence);
-		
-		logger.debug("list_ofBoundingBox: "+polygonBbox.list_ofBoundingBox.size());
-//		for(int j=0;j<polygonBbox.list_ofBoundingBox.size();j++){
-//			System.out.println("bbox: "+ polygonBbox.list_ofStrConsistingOf5CoordinatesForBoundingBox.get(j));
-//			System.out.println("polygon: "+polygonBbox.list_ofStrCoordinatesForPolygon.get(j));
-//			System.out.println("objectid: "+polygonBbox.list_BboxObjectidForUnloading.get(j));
-//		}
-		
-	//	String polygonPoints = "13.036148781321177 47.82378749043524 13.036770783951816 47.82404755187994 13.037296268932874 47.823262005454175 13.036148781321177 47.82378749043524";
-				
 		ServletInputStream serin = request.getInputStream();
 		if(serin == null){
-			System.out.println("No data received on doPOST()!");
+			logger.debug("No data received on doPOST()!");
 			return;
 		}
 		StringBuilder stringBuilder = new StringBuilder();
@@ -154,85 +126,71 @@ public class InsertData extends HttpServlet {
 	    scanner.close();
 	    String insertData = stringBuilder.toString();
 	    String insertDataFinal = insertData;
-	    System.out.println("InsertData.doPOST received :"+insertData);
+	    logger.debug("Data doPost received: "+insertData);
 	    
-	    //later for json files
-	    //new ParseIOJson().parseIoJson(insertDataFinal);	    
-	    /*try {
-			System.out.println(TextFiles.prettyPrintXmlString(xml_og, 2));
-		} catch (TransformerException e) {			
-			e.printStackTrace();
-		}*/
+	    
+		logger.debug("doPost()");
+		Networking net = new Networking();
+		PointPolygon polygonBbox = new PointPolygon();
+		PointInPolygonComputation pipComputation = new PointInPolygonComputation();
+		Service service = Service.getInstance();	
+
+		pipComputation.getPolygonBboxFromWFSForWithin("bbox", polygonBbox, LoadOnStartAppConfiguration.urlWfsBoundingBox_withinGeofence);
+		pipComputation.getPolygonBboxFromWFSForWithin("polygon", polygonBbox, LoadOnStartAppConfiguration.urlWfsPolygons_withinGeofence);
+		
+		logger.debug("list_ofBoundingBox: "+polygonBbox.list_ofBoundingBox.size());
+		
+	//	String polygonPoints = "13.036148781321177 47.82378749043524 13.036770783951816 47.82404755187994 13.037296268932874 47.823262005454175 13.036148781321177 47.82378749043524";
+				
+
+
 	    
 		ParserXmlJson xmlJsonparser = new ParserXmlJson();
-		insertDataType = xmlJsonparser.checkReceivedData(insertData);
-		System.out.println("InsertData.doPOST insertDataType :"+insertDataType);
-		
+		insertDataType = xmlJsonparser.checkReceivedData(insertData);				
 		String server_response = "";		
 		
 		if(insertDataType.equals("InsertSensor")){
-			insertDataFinal = insertData; //need no modification
+			insertDataFinal = insertData; //needs no modification
 			server_response = net.sendPOST2Webservice(LoadOnStartAppConfiguration.urlSosService, insertDataFinal);
-						
-		}else if(insertDataType.equals("InsertObservation")){					
 			
+		}else if(insertDataType.equals("InsertObservation")){								
 			PointPolygon point = xmlJsonparser.extractPointFromIO(insertData);	
-			logger.debug("InsertData.doPost og_extracted_from_IO_x: "+point.point2D.getX());
-			logger.debug("InsertData.doPost og_extracted_from_IO_y: "+point.point2D.getY());
-					
-			//point.setX_longitude(Double.parseDouble(LoadOnStartAppConfiguration.xCoordTestFake));  
-			//point.setY_latitude(Double.parseDouble(LoadOnStartAppConfiguration.yCoordTestFake)); 
-			//logger.debug("InsertData.doPost fake test x: "+point.getX_longitude());
-			//logger.debug("InsertData.doPost fake test y: "+point.getY_latitude());
-					
+		
+			pipComputation.getPolygonBboxFromWFSForUnloading("bbox", polygonBbox, LoadOnStartAppConfiguration.urlWfsBoundingBox);
+			pipComputation.getPolygonBboxFromWFSForUnloading("polygon", polygonBbox, LoadOnStartAppConfiguration.urlWfsPolygons);
 			
-			 //pipComputation.pointInPolygonTestData(point, polygonBbox);
 			isPointInPolygonUnloading = pipComputation.pointIsInPolygon(point, polygonBbox, polygonBbox.list_BboxObjectidForUnloading,"unloading");
 			isPointInPolygonWithin = pipComputation.pointIsInPolygon(point, polygonBbox, polygonBbox.list_BboxObjectiWithin,"within");
-
-			System.out.println("################### isPointInPolygonUnloading: "+ isPointInPolygonUnloading);
-			System.out.println("################### isPointInPolygonWithin: "+ isPointInPolygonWithin);	
 			
-			if(isPointInPolygonUnloading)
-			{
-				System.out.println("InsertData.doGet isPointInPolygonUnloading: TRUE ");
-				insertDataFinal = xmlJsonparser.modifyIoXml(insertData);
-				System.out.println("InsertData.doGet insertDataFinal:\n" +insertDataFinal);
-			}else{
-				System.out.println("InsertData.doGet isPointInPolygonUnloading: FALSE ");
-				//insertDataFinal = xmlJsonparser.modifyIoXml(insertData);
-				System.out.println("InsertData.doGet insertDataFinal:\n" +insertDataFinal);
+			if(isPointInPolygonUnloading){				
+				insertDataFinal = xmlJsonparser.modifyIoXml(insertData);				
 			}
-			LoadOnStartAppConfiguration.active_urlWithinGeofenceWfsService=true;
+			
 			if(LoadOnStartAppConfiguration.active_urlWithinGeofenceWfsService){
-				GeoJson geojson= xmlJsonparser.extractDataForGeoJsonFromIo(insertData);
-				String jsonText = new CreateJson().createJson(geojson, isPointInPolygonWithin);				
-				LoadOnStartAppConfiguration.clientEndPoint.sendMessage(jsonText);
-			}
-				
-			
+				//if(isPointInPolygonWithin){ every geoJson will be sent to WebSocket
+					GeoJson geojson= xmlJsonparser.extractDataForGeoJsonFromIo(insertData);
+					String jsonText = new CreateJson().createJson(geojson, isPointInPolygonWithin);				
+					LoadOnStartAppConfiguration.clientEndPoint.sendMessage(jsonText);
+				//}
+			}				
 			server_response = net.sendPOST2Webservice(LoadOnStartAppConfiguration.urlSosService, insertDataFinal);
+			
 		} else if(insertDataType.equals("json")){
 			System.out.println("InsertData.doPOST insertDataType :"+insertDataType);
 			server_response = net.sendPOST2Webservice(LoadOnStartAppConfiguration.urlSosService, insertDataFinal);
 		}
-
-		//String server_response = net.sendPOST2Webservice(LoadOnStartAppConfiguration.urlSosService, insertDataFinal);
+		
 		PrintWriter outs = response.getWriter();
 		response.setContentType("text/xml");
 		//response.setContentType("application/xml");
 		//response.setContentType("text/xml");
 		//response.setCharacterEncoding("charset=UTF-8");
 	
-		//response.setContentType ("application/txt");
 		if(insertDataType.equals("InsertSensor")){
 			insertDataFinal = insertData; //need no modification
 			outs.write(server_response);
 		}else if(insertDataType.equals("InsertObservation")){
-	//		outs.write("echter point is in polygon: "+isPointInPolygonUnloading);
-		//	outs.write("\nFake point zum Testen is in polygon: "+LoadOnStartAppConfiguration.fakeTestPointInPolygon);
 			outs.write(server_response);
 		}
-		//outs.write(server_response);
 	}
 }

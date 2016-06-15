@@ -1,4 +1,4 @@
-# focus-log-loading_geofence
+# focus-geofence
 
 The purpose of the primary web service is to determine, if a forest truck is unloading tree logs. Therefore it is checked, if the "loading event" (based on the SensorAppIII vibration indicator) is taking place in a predefined geographical area (e.g log area saw mill). The purpose of the secondary web service is to determine, if a forest truck is located within a predefined geofence. 
 
@@ -12,7 +12,7 @@ The purpose of the primary web service is to determine, if a forest truck is unl
 
 **Get the pre-exported version:**
 
-1. Download the `focusgeofence.war` file from https://github.com/ispaceappengine/focus-log-loading_geofence/tree/master/build
+1. Download the `focusgeofence.war` file from the build directory (in most cases: https://github.com/ispaceappengine/focus-geofence/tree/master/build)
 2. Deploy the war file to your Tomcat 8 web server.
 3. Access the web service: ..yourDomain.org/**focusgeofence**
 4. You should see something like the following
@@ -24,7 +24,7 @@ The purpose of the primary web service is to determine, if a forest truck is unl
 **Export your own focusgeofence.war file:**
 
 1. Download/pull the code.
-2. Import project into Eclipse IDE
+2. Import project into Eclipse IDE.
 3. Rightclick the project > Export > WAR file > Provide save destination > Finish.
 4. Deploy the war file to your Tomcat 8 web server.
 5. Access the web service: ..yourDomain.org/**focusgeofence**

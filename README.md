@@ -8,7 +8,6 @@ The purpose of the primary web service is to determine, if a forest truck is unl
 * Apache Tomcat 8 as web server
 * JDK 1.8 
 * Latest Eclipse IDE
-*
 
 **Get the pre-exported version:**
 
@@ -32,8 +31,7 @@ The purpose of the primary web service is to determine, if a forest truck is unl
 
 Contact
 -------
-Author: Simo Lukic<br />
-Contact: office.ispace@researchstudio.at<br />
+E-Mail: office.ispace@researchstudio.at<br />
 www.researchstudio.at<br />
 
 LICENSE
